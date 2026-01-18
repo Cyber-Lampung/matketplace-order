@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Test file uploads</title>
+  </head>
+  <body>
+    <form id="formTest" enctype="multipart/form-data">
+      <input type="file" placeholder="masukan file anda" id="file" />
+      <input
+        type="text"
+        name="nameProduk"
+        placeholder="name produk"
+        id="nameProduk"
+      />
+      <input type="text" name="harga" placeholder="masukan harga" id="harga" />
+      <input type="text" name="rating" placeholder="rating" id="rating" />
+      <button id="upload" type="submit">Upload File</button>
+    </form>
+
+    <!-- <img id="privew" style="display: none; width: 300px" /> -->
+
+    <script>
+      const btn = document.getElementById("upload");
+      const imageElement = document.getElementById("file");
+      const nameProduk = document.getElementById("nameProduk").value;
+      const harga = document.getElementById("harga").value;
+      const rating = document.getElementById("rating").value;
+
+      btn.addEventListener("click", async (e) => {
+        e.preventDefault();
+        const img = imageElement.files[0];
+        const formData = new FormData();
+
+        formData.append("file_upload", img);
+        formData.append("name_produk", nameProduk);
+        formData.append("harga", harga);
+        formData.append("rating", rating);
+
+        const response = await fetch(
+          "http://localhost:3000/produk/produk/upload",
+          {
+            method: "POST",
+            body: formData,
+          },
+        );
+        const res = await response.json();
+
+        console.log(res);
+      });
+    </script>
+  </body>
+</html>

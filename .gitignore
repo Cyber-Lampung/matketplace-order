@@ -1,0 +1,7 @@
+/node_modules
+readme.md
+/service/module/database.js
+# ./src/.env
+.env
+.vercel
+.env*.local
