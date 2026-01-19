@@ -3,7 +3,7 @@ import multer from "multer";
 import path from "path";
 import getProdukController from "../controllers/produk.controller/getProduk.controller.js";
 import checkTokenHeader from "../middleware/checkTokenHeader.js";
-import saveFileController from "../controllers/produk.controller/saveFile.controller.js";
+import saveFileController from "../controllers/produk.controller/saveFileProduk.controller.js";
 
 // definisikan multer
 const storage = multer.diskStorage({
@@ -38,6 +38,7 @@ router.get("/produk/list", checkTokenHeader, (req, res, next) => {
 // upload produk
 router.post(
   "/produk/upload",
+  checkTokenHeader,
   upload.single("file_upload"),
   (req, res, next) => {
     saveFileController(req, res, next);
