@@ -1,6 +1,6 @@
 import UserRegister from "../services/userRegister.service.js";
 
-const Register = async (req, res, next) => {
+const registerController = async (req, res, next) => {
   // ambil data user body
   const { email, username, password, role } = req.body;
 
@@ -30,4 +30,4 @@ const Register = async (req, res, next) => {
   }
 };
 
-export default Register;
+export default registerController;

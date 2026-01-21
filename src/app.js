@@ -18,7 +18,6 @@ const limit = rateLimit({
 });
 
 const app = express();
-// app.use(limit);
 
 // definisikan __filename dan __dirname
 
@@ -26,8 +25,9 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // public folder
-
 app.use(express.static("public/"));
+
+app.use(limit);
 app.use(
   cors({
     origin: "http://localhost:3000",
@@ -35,17 +35,17 @@ app.use(
 );
 app.use(cookieParser());
 app.use(express.json());
-// app.use(
-//   helmet.contentSecurityPolicy({
-//     directives: {
-//       ...helmet.contentSecurityPolicy.getDefaultDirectives(),
-//       // spesifik allow inline style atributs on element
-//       "style-src-attr": ["'unsafe-inline'"],
-//       // keep your exisiting default-src or order directive
-//       "default-src": ["'self'"],
-//     },
-//   }),
-// );
+app.use(
+  helmet.contentSecurityPolicy({
+    directives: {
+      ...helmet.contentSecurityPolicy.getDefaultDirectives(),
+      // spesifik allow inline style atributs on element
+      "style-src-attr": ["'unsafe-inline'"],
+      // keep your exisiting default-src or order directive
+      "default-src": ["'self'"],
+    },
+  }),
+);
 
 // static folder public
 

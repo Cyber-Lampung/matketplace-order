@@ -15,7 +15,7 @@ const saveRegisterUer = async (
   // save user dalama database
 
   const [saveUser] = await db.query(
-    "insert into users (user_id, email, username, password, created_at, isVerif) values (?, ?, ?, ?, ?, ?)",
+    "insert into users (user_id, email, username, password, created_at, isVerifToken) values (?, ?, ?, ?, ?, ?)",
     [userId, email, username, password, create_at, isVerif],
   );
 

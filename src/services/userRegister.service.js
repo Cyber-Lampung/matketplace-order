@@ -3,6 +3,7 @@ import createdDateTime from "../utils/createdDateTime.utils.js";
 import createSessionId from "../utils/generateSession.utils.js";
 import generateUUID from "../utils/generateUUID.js";
 import bcryptPassword from "../utils/hashPassword.js";
+import sendTokenMail from "./nodemailer.service/sendTokenEmal.service.js";
 
 const UserRegister = async (email, username, password, role) => {
   // ambil function untuk hash password
@@ -45,6 +46,10 @@ const UserRegister = async (email, username, password, role) => {
     role,
     role_id,
   );
+
+  const responseSendMail = sendTokenMail(email);
+
+  console.log(responseSendMail);
 
   if (check.status === true) {
     return { status: true, session: check.session };
