@@ -4,8 +4,6 @@ const checkTokenHeader = (req, res, next) => {
   // check token
 
   const tokenHeader = req.headers.authorization;
-  const cookiesToken = req.headers.cookie;
-  console.log(cookiesToken.split("=")[1]);
 
   if (!tokenHeader) {
     return res

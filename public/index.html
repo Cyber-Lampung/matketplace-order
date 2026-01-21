@@ -2,55 +2,98 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Test file uploads</title>
+    <title>Debug File Upload</title>
   </head>
   <body>
-    <form id="formTest" enctype="multipart/form-data">
-      <input type="file" placeholder="masukan file anda" id="file" />
-      <input
-        type="text"
-        name="nameProduk"
-        placeholder="name produk"
-        id="nameProduk"
-      />
-      <input type="text" name="harga" placeholder="masukan harga" id="harga" />
-      <input type="text" name="rating" placeholder="rating" id="rating" />
-      <button id="upload" type="submit">Upload File</button>
-    </form>
+    <input type="file" id="input_file_html" />
+    <input type="text" placeholder="Masukan Nama Produk" id="nama_produk" />
+    <input type="number" placeholder="masukan harga" id="harga_produk" />
+    <input
+      type="number"
+      placeholder="masukan rating produk"
+      id="rating_produk"
+    />
+    <button id="btn_kirim">Kirim File</button>
 
-    <!-- <img id="privew" style="display: none; width: 300px" /> -->
+    <button onclick="getData()">get data produk</button>
+
+    <div id="priview"></div>
 
     <script>
-      const btn = document.getElementById("upload");
-      const imageElement = document.getElementById("file");
-      const nameProduk = document.getElementById("nameProduk").value;
-      const harga = document.getElementById("harga").value;
-      const rating = document.getElementById("rating").value;
+      const priview = document.getElementById("priview");
 
-      btn.addEventListener("click", async (e) => {
-        e.preventDefault();
-        const img = imageElement.files[0];
-        const formData = new FormData();
+      function postData() {
+        const btn = document.getElementById("btn_kirim");
+        const input = document.getElementById("input_file_html");
+        const name_produk = document.getElementById("name_produk");
+        const harga_produk = document.getElementById("harga_produk").value;
+        const rating_produk = document.getElementById("rating_produk").value;
 
-        formData.append("file_upload", img);
-        formData.append("name_produk", nameProduk);
-        formData.append("harga", harga);
-        formData.append("rating", rating);
+        btn.addEventListener("click", async (e) => {
+          e.preventDefault();
 
+          if (input.files.length === 0) {
+            alert("Silakan pilih file terlebih dahulu!");
+            return;
+          }
+
+          // 1. Gunakan FormData
+          const dataKirim = new FormData();
+
+          // 2. NAMA FIELD HARUS SAMA: "file_upload" (sesuai upload.single di route)
+          dataKirim.append("file_upload", input.files[0]);
+          dataKirim.append("name_produk", name_produk);
+          dataKirim.append("harga_produk", harga_produk);
+          dataKirim.append("rating_produk", rating_produk);
+
+          try {
+            const response = await fetch(
+              "http://localhost:3000/produk/produk/upload",
+              {
+                method: "POST",
+                body: dataKirim, // JANGAN set header Content-Type secara manual
+              },
+            );
+
+            console.log(await response.json());
+          } catch (error) {
+            console.error("Gagal mengirim file:", error);
+          }
+        });
+      }
+
+      postData();
+
+      async function getData() {
+        // alert(1);
         const response = await fetch(
-          "http://localhost:3000/produk/produk/upload",
+          "http://localhost:3000/produk/produk/list",
           {
-            method: "POST",
-            authorization:
-              "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJkN2ZmMWY0MS04MmU4LTQxNTMtOGYzNi1jYmI2NTc0YTJiODciLCJpYXQiOjE3Njg2NTkyMDUsImV4cCI6MTc2OTI2NDAwNX0.F3nQxCm6Xi37mMKIiZep_MCbD1TICFTUbjfRm_TMWdk",
-            body: formData,
+            headers: {
+              authorization:
+                "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJkN2ZmMWY0MS04MmU4LTQxNTMtOGYzNi1jYmI2NTc0YTJiODciLCJpYXQiOjE3Njg2NTkyMDUsImV4cCI6MTc2OTI2NDAwNX0.F3nQxCm6Xi37mMKIiZep_MCbD1TICFTUbjfRm_TMWdk",
+            },
           },
         );
-        const res = await response.json();
 
-        console.log(res);
-      });
+        const dataProduk = await response.json();
+
+        Object.entries(
+          dataProduk.produk.map((items) => {
+            const pathImage = JSON.parse(items.produks_order);
+            console.log(pathImage);
+
+            const templateEnggine = `<div>
+              <img src=${`http://localhost:3000/uploads/${pathImage.pathFileImage}`}>
+                <p>${items.produk_id}</p>
+                <p>${items.name_produk}</p>
+              </div>`;
+
+            // append to priview
+            priview.innerHTML = templateEnggine;
+          }),
+        );
+      }
     </script>
   </body>
 </html>

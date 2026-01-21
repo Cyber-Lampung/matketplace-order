@@ -4,11 +4,13 @@ import path from "path";
 import getProdukController from "../controllers/produk.controller/getProduk.controller.js";
 import checkTokenHeader from "../middleware/checkTokenHeader.js";
 import saveFileController from "../controllers/produk.controller/saveFileProduk.controller.js";
+import deleteProdukController from "../controllers/produk.controller/deleteProduk.controller.js";
+import editProdukController from "../controllers/produk.controller/editProduk.controller.js";
 
 // definisikan multer
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, "src/assets/uploads/imagesProduk/"); // folder tujuan
+    cb(null, "uploads/images/"); // folder tujuan
   },
 
   filename: function (req, file, cb) {
@@ -38,11 +40,20 @@ router.get("/produk/list", checkTokenHeader, (req, res, next) => {
 // upload produk
 router.post(
   "/produk/upload",
-  checkTokenHeader,
   upload.single("file_upload"),
   (req, res, next) => {
+    console.log(req.file);
     saveFileController(req, res, next);
   },
 );
+
+router.delete("/produk/delete", checkTokenHeader, (req, res, next) => {
+  deleteProdukController(req, res, next);
+});
+
+// edit produk
+router.patch("/produk/edit", (req, res, next) => {
+  editProdukController(req, res, next);
+});
 
 export default router;

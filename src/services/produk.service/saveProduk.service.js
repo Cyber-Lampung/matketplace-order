@@ -1,7 +1,7 @@
 import saveProdukModel from "../../model/repository/produk.repository/saveProduk.model.js";
 import generateUUID from "../../utils/generateUUID.js";
 
-const saveProdukService = (
+const saveProdukService = async (
   user_id,
   pathFileImage,
   name_produk,
@@ -18,7 +18,7 @@ const saveProdukService = (
     return { status: false, message: "empety fields" };
   }
 
-  const regexFileImage = /(.png|.jpg|.webp)/s;
+  const regexFileImage = /(.png$|.jpg$|.webp$)/s;
 
   const validasiExtFileImage = regexFileImage.test(pathFileImage);
 
@@ -27,7 +27,6 @@ const saveProdukService = (
   }
 
   //   produk_id
-
   const produk_id = generateUUID();
 
   //   data produk
@@ -37,10 +36,13 @@ const saveProdukService = (
     harga: harga,
     rating: rating,
   };
-
-  console.log(produkData);
-
-  const saveProdukInDb = saveProdukModel(produk_id, user_id, produkData);
+  const saveProdukInDb = await saveProdukModel(produk_id, user_id, produkData);
+  console.log(saveProdukInDb);
+  // if (saveProdukInDb.status) {
+  //   return { status: true, message: "succes add produk" };
+  // } else {
+  //   return { status: false, message: saveProdukInDb.status };
+  // }
 };
 
 export default saveProdukService;
