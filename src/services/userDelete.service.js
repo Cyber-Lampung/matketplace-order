@@ -7,6 +7,8 @@ const DeleteAccountService = async (token) => {
   const secretPublicKey = process.env.JWT_SECRET;
   const verifToken = await jwt.verify(token, secretPublicKey);
 
+  console.log(verifToken.userId);
+
   //   kirim userId ke model untuk di check
   const serchUser = await DeleteUserModel(verifToken.userId);
 

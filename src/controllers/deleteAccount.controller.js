@@ -1,6 +1,6 @@
 import DeleteAccountService from "../services/userDelete.service.js";
 
-const DeleteAccount = async (req, res, next) => {
+const deleteAccount = async (req, res, next) => {
   const bearerToken = req.headers.authorization;
   const splitBearerJWT = bearerToken.split(" ")[1];
 
@@ -21,4 +21,4 @@ const DeleteAccount = async (req, res, next) => {
   }
 };
 
-export default DeleteAccount;
+export default deleteAccount;

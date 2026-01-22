@@ -18,7 +18,6 @@ const storage = multer.diskStorage({
     const ext = path.extname(file.originalname);
 
     // membuat nama unix untuk setiap file
-
     const unixFileName = Date.now() + "-" + Math.round(Math.random() * 1e9);
     cb(null, file.fieldname + "-" + unixFileName + ext);
   },

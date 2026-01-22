@@ -25,9 +25,8 @@ const saveRegisterUer = async (
   );
 
   const [setRole] = await db.query(
-    "insert into role_user (role_id, user_id, role) values (?, ?, ?)"[
-      (role_id, userId, role)
-    ],
+    "insert into role_user (role_id, user_id, role) values (?, ?, ?)",
+    [role_id, userId, role],
   );
 
   // console.table(saveSession[0]);
