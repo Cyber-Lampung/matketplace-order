@@ -12,17 +12,15 @@ const speksifikasiProdukController = async (req, res, next) => {
       });
     }
 
-    const { checkOutInformation } = req.body;
+    const produk_id = req.params.produk_id;
 
-    if (!checkOutInformation || !req.body) {
+    if (!produk_id) {
       return res.status(400).json({
         statusCode: 400,
         status: false,
-        message: "checkOutInformaion not empety",
+        message: "produkId is not empety",
       });
     }
-
-    const { produk_id } = checkOutInformation;
 
     const { statusCode, status, message, data } =
       await searchProdukByProdukIdService(produk_id);
@@ -32,7 +30,7 @@ const speksifikasiProdukController = async (req, res, next) => {
         statusCode: statusCode,
         status: status,
         message: message,
-        data: data,
+        data: JSON.parse(data.produk_data),
       });
     } else {
       return res

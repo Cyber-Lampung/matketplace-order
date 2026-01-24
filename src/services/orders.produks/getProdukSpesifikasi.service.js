@@ -12,6 +12,10 @@ const searchProdukByProdukIdService = async (produk_id) => {
 
   const responseQueryProduk = await checkProdukInformationDb(produk_id);
 
+  // ubah data produk dari stringify ke parse json asli
+
+  // const revertJsonStringigy = JSON.parse(responseQueryProduk)
+
   if (responseQueryProduk.status) {
     return {
       statusCode: 200,

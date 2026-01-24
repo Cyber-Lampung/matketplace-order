@@ -8,7 +8,6 @@ const saveFileController = async (req, res, next) => {
     const pathImage = req.file.path;
 
     const {
-      id_produk,
       name_produk,
       description,
       harga,
@@ -20,7 +19,6 @@ const saveFileController = async (req, res, next) => {
 
     const responseServiceSaveFile = saveProdukService(
       pathImage,
-      id_produk,
       name_produk,
       description,
       harga,

@@ -52,7 +52,7 @@ vercel --prod => deploy or update production command
 
     # endpoint login
 
-        Contoh request dengan Bodu ( POST ),
+        Contoh request dengan Body ( POST ),
 
         - **URL: ** `/users/login`
         - **METHOD: ** `POST`
@@ -66,3 +66,35 @@ vercel --prod => deploy or update production command
         - ** Error Response **
         - ** Code: ** 404 User Not Found
         - ** Content: ** `{statusCode : 404, status: false, message: "invalid user not found"}`
+
+
+    # endpoint Checkout
+
+        Contoh request dengan Body ( POST )
+
+        - **URL: ** `/orders/order/checkout`
+        - **METHOD: ** `POST`,
+        - **Headers: ** `Content-Type: application/json`
+        - **Body: **
+        ```
+            {
+                "checkOutInformation": {
+                    "userInformation" : {
+                    "name": "rado",
+                    "phone" : "0895620232913",
+                    "address": "gg.sujak no- Lampung-Selatan",
+                    "city" : "Bandar Lampung",
+                    "province" : "Lampung",
+                    "postal_code": "0305"
+                },
+                "shiping" : {
+                    "shiping_methods" : "jne",
+                    "payment_method" : "qris",
+                    "vourher_code": "adsdsdd",
+                    "notes" : "yang rapih ya kk pagingnya"
+                },
+                "items": {
+                    "data": [{"produk_id" : "asdasddasdasd", "qyt": 3}]
+                }
+                }
+            }

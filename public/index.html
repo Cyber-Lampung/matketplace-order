@@ -38,7 +38,6 @@
           const dataKirim = new FormData();
 
           const dataProduk = {
-            id: 1,
             name_produk: "adidas",
             description: "asdasdsdasdsdsdasdadasasd",
             harga: "200.000",
@@ -49,7 +48,6 @@
           };
 
           dataKirim.append("file_upload", input.files[0]);
-          dataKirim.append("id_produk", dataProduk.id);
           dataKirim.append("name_produk", dataProduk.name_produk);
           dataKirim.append("description", dataProduk.description);
           dataKirim.append("harga", dataProduk.harga);

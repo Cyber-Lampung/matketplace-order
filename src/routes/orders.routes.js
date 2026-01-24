@@ -17,12 +17,12 @@ router.get("/order.riwayat", (req, res, next) => {
   return res.send("okee");
 });
 
-router.get("/order.spesifikasi", checkTokenHeader, (req, res, next) => {
+router.get("/order/:produk_id", checkTokenHeader, (req, res, next) => {
   speksifikasiProdukController(req, res, next);
 });
 
 // handel untuk user jika melakukan pembelian
-router.post("/order.checkout", checkTokenHeader, (req, res, next) => {
+router.post("/order/checkout", checkTokenHeader, (req, res, next) => {
   checkOutController(req, res, next);
 });
 
