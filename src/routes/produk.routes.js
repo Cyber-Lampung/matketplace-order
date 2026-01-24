@@ -23,12 +23,11 @@ const storage = multer.diskStorage({
   },
 });
 
+// setup upload
 const upload = multer({ storage: storage });
 
 // membuat router
 const router = express.Router();
-
-// route for produk
 
 // fiture admin
 router.get("/produk/list", checkTokenHeader, (req, res, next) => {
@@ -41,11 +40,12 @@ router.post(
   "/produk/upload",
   upload.single("file_upload"),
   (req, res, next) => {
-    console.log(req.file);
+    // console.log(req.body);
     saveFileController(req, res, next);
   },
 );
 
+// delete produk
 router.delete("/produk/delete", checkTokenHeader, (req, res, next) => {
   deleteProdukController(req, res, next);
 });

@@ -1,11 +1,11 @@
 import layerTransport from "../../config/mailer.config.js";
 
-const sendTokenEmail = async (email) => {
+const sendTokenEmail = async (email, token) => {
   const mailOptions = {
     from: process.env.USERNAME_SMTP,
     to: email,
     subject: "verfikasi email",
-    text: "verifikasi token test",
+    text: `token verification anda adalah ${token} silahkan gunakan sebelum 10 menit`,
   };
 
   try {

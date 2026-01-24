@@ -13,7 +13,7 @@ const verifikasiTokenController = async (req, res, next) => {
 
     return res.status(statusCode).json({ status: status, message: message });
   } catch {
-    return res.status(400).json({ status: 400, message: "bad connection" });
+    return res.status(400).json({ status: 400, message: "bad request" });
   }
 };
 

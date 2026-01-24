@@ -27,7 +27,7 @@ const __dirname = path.dirname(__filename);
 // public folder
 app.use(express.static("public/"));
 
-app.use(limit);
+// app.use(limit);
 app.use(
   cors({
     origin: "http://localhost:3000",
@@ -35,6 +35,7 @@ app.use(
 );
 app.use(cookieParser());
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(
   helmet.contentSecurityPolicy({
     directives: {
@@ -57,6 +58,7 @@ app.use(
 // import Route
 import userRoutes from "./routes/user.routes.js";
 import produkRoute from "./routes/produk.routes.js";
+import order_produks from "./routes/orders.routes.js";
 
 // app
 
@@ -66,6 +68,7 @@ app.get("/", (req, res) => {
 
 app.use("/users", userRoutes);
 app.use("/produk", produkRoute);
+app.use("/orders", order_produks);
 // app.use("/sessions")
 
 // error path handling

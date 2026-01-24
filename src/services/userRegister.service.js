@@ -64,10 +64,13 @@ const UserRegister = async (email, username, password, role = "user") => {
     role_id,
   );
 
-  if (check.status === true && responseCreatedTokenVeif) {
+  if (check.status === true && responseCreatedTokenVeif.status) {
     // kirim token disini
 
-    const sendTokenViaEmail = await sendTokenMail(email);
+    const sendTokenViaEmail = await sendTokenMail(
+      email,
+      responseCreatedTokenVeif.token,
+    );
 
     if (!sendTokenViaEmail.messageId) {
       console.log("invalid kirim token");

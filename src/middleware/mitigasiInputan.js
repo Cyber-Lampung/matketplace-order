@@ -1,4 +1,6 @@
-const checkInputanAttack = (email, username, password) => {
+const checkInputanAttack = (req, res, next) => {
+  const { email, username, password } = req.body;
+
   const regexMitigasi = /--`'$-#^%&=/;
 
   const emailCheck = regexMitigasi.test(email);
@@ -12,6 +14,8 @@ const checkInputanAttack = (email, username, password) => {
       message: "Invalid Input, detection character Annomali",
     });
   }
+
+  next();
 };
 
 export default checkInputanAttack;

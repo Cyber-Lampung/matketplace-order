@@ -1,23 +1,34 @@
 import DeleteAccountService from "../services/userDelete.service.js";
 
 const deleteAccount = async (req, res, next) => {
-  const bearerToken = req.headers.authorization;
-  const splitBearerJWT = bearerToken.split(" ")[1];
+  try {
+    // token headers => best practic for mobile apps
+    const bearerToken = req.headers.authorization;
+    const splitBearerJWT = bearerToken.split(" ")[1];
 
-  if (!bearerToken) {
-    return { status: false, message: "token empety" };
-  }
+    // cookie user => best practic for web dev
 
-  const deleteAccountService = await DeleteAccountService(splitBearerJWT);
+    // const cookieSession = req.cookie("session");
 
-  if (deleteAccountService.status === "succes") {
+    if (!bearerToken) {
+      return { status: false, message: "token empety" };
+    }
+
+    const deleteAccountService = await DeleteAccountService(splitBearerJWT);
+
+    if (deleteAccountService.status === "succes") {
+      return res
+        .status(200)
+        .json({ status: true, message: deleteAccountService.message });
+    } else {
+      return res
+        .status(404)
+        .json({ status: false, messae: deleteAccountService.message });
+    }
+  } catch {
     return res
-      .status(200)
-      .json({ status: true, message: deleteAccountService.message });
-  } else {
-    return res
-      .status(404)
-      .json({ status: false, messae: deleteAccountService.message });
+      .status(400)
+      .json({ statusCode: 400, status: false, messae: "bad request" });
   }
 };
 

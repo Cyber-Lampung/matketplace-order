@@ -25,9 +25,6 @@
       function postData() {
         const btn = document.getElementById("btn_kirim");
         const input = document.getElementById("input_file_html");
-        const name_produk = document.getElementById("name_produk");
-        const harga_produk = document.getElementById("harga_produk").value;
-        const rating_produk = document.getElementById("rating_produk").value;
 
         btn.addEventListener("click", async (e) => {
           e.preventDefault();
@@ -40,17 +37,32 @@
           // 1. Gunakan FormData
           const dataKirim = new FormData();
 
-          // 2. NAMA FIELD HARUS SAMA: "file_upload" (sesuai upload.single di route)
-          dataKirim.append("file_upload", input.files[0]);
-          dataKirim.append("name_produk", name_produk);
-          dataKirim.append("harga_produk", harga_produk);
-          dataKirim.append("rating_produk", rating_produk);
+          const dataProduk = {
+            id: 1,
+            name_produk: "adidas",
+            description: "asdasdsdasdsdsdasdadasasd",
+            harga: "200.000",
+            stock: 50,
+            rating: 4.5,
+            kategori: "aksesoris",
+            kondisi: "baru",
+          };
 
+          dataKirim.append("file_upload", input.files[0]);
+          dataKirim.append("id_produk", dataProduk.id);
+          dataKirim.append("name_produk", dataProduk.name_produk);
+          dataKirim.append("description", dataProduk.description);
+          dataKirim.append("harga", dataProduk.harga);
+          dataKirim.append("stock", dataProduk.stock);
+          dataKirim.append("rating", dataProduk.rating);
+          dataKirim.append("kategori", dataProduk.kategori);
+          dataKirim.append("kondisi", dataProduk.kondisi);
           try {
             const response = await fetch(
               "http://localhost:3000/produk/produk/upload",
               {
                 method: "POST",
+                // headers: { "Content-Type": "application/json" },
                 body: dataKirim, // JANGAN set header Content-Type secara manual
               },
             );

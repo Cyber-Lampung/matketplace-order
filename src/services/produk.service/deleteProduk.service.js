@@ -1,21 +1,27 @@
 import deleteProduk from "../../model/repository/produk.repository/deleteProduk.model.js";
 
-const deleteProdukService = async (user_id) => {
-  // check user_id terlebih dahulu
+const deleteProdukService = async (produk_id) => {
+  // validasi produk_id
 
-  const checkUserId = await deleteProduk(user_id);
-
-  if (!checkUserId) {
-    return { status: false, message: "user id not found" };
+  if (!produk_id) {
+    return {
+      statusCode: 401,
+      status: false,
+      message: "invalid produk id is not empety",
+    };
   }
 
   //   dibuat untuk tidak search user terlebih dahulu
-  const searchDeleteProduk = await deleteProduk(user_id);
+  const searchDeleteProduk = await deleteProduk(produk_id);
 
   if (searchDeleteProduk) {
-    return { status: 200, message: "succes delete produk" };
+    return { statusCode: 200, status: 200, message: "succes delete produk" };
   } else {
-    return { status: 404, message: "invalid delete produk , produk not found" };
+    return {
+      statusCode: 404,
+      status: 404,
+      message: "invalid delete produk , produk not found",
+    };
   }
 };
 

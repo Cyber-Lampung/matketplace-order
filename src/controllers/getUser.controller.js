@@ -14,7 +14,9 @@ const getUserController = async (req, res, next) => {
         .json({ status: "user belum ditemukan", statusCode: 404 });
     }
   } catch {
-    return res.status(500).json({ status: 500, message: "invalid syntaxt" });
+    return res
+      .status(400)
+      .json({ statusCode: 400, status: false, message: "bad request" });
   }
 };
 

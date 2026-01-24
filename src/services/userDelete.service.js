@@ -1,13 +1,16 @@
 import jwt from "jsonwebtoken";
 import DeleteUserModel from "../model/repository/deleteUser.model.js";
 
-const DeleteAccountService = async (token) => {
+const DeleteAccountService = async (tokenHeader) => {
   // console.log(token); => testing
 
   const secretPublicKey = process.env.JWT_SECRET;
-  const verifToken = await jwt.verify(token, secretPublicKey);
 
-  console.log(verifToken.userId);
+  // for mobile cookie
+  const verifToken = await jwt.verify(tokenHeader, secretPublicKey);
+
+  // for web cookie
+  // const verifTokenCookie = await jwt.verify(tokenCookie, secretPublicKey);
 
   //   kirim userId ke model untuk di check
   const serchUser = await DeleteUserModel(verifToken.userId);

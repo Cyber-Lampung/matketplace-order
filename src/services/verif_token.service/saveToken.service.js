@@ -17,7 +17,7 @@ const saveTokenService = async (user_id) => {
   );
 
   if (responseSaveToken) {
-    return true;
+    return { status: true, token: verifToken };
   } else {
     return false;
   }

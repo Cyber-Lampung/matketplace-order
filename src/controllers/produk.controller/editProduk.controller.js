@@ -43,9 +43,7 @@ const editProdukController = async (req, res, next) => {
       });
     }
   } catch {
-    return res
-      .status(400)
-      .json({ status: 400, message: "internal server error" });
+    return res.status(400).json({ status: 400, message: "bad request" });
   }
 };
 

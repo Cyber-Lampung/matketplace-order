@@ -1,32 +1,44 @@
+import { type } from "node:os";
 import saveProdukService from "../../services/produk.service/saveProduk.service.js";
 
-const saveFileController = (req, res, next) => {
-  //  yang dibutuhkan untuk produk
-  //   const pathFile = req.file.path;
-  //   const { nameProduk, harga, rating } = req.body;
-  const pathFile = req.file.filename;
+const saveFileController = async (req, res, next) => {
+  try {
+    // ambil path image
 
-  const { name_produk, harga_produk, rating_produk } = req.body; //  console.log(pathFile, nameProduk, harga, rating);
-  const user_id = req.user_id;
+    const pathImage = req.file.path;
 
-  // kirim data ke service
-  const saveDataProdukService = saveProdukService(
-    user_id,
-    pathFile,
-    name_produk,
-    harga_produk,
-    rating_produk,
-  );
+    const {
+      id_produk,
+      name_produk,
+      description,
+      harga,
+      stock,
+      rating,
+      kategori,
+      kondisi,
+    } = req.body;
 
-  if (saveDataProdukService.status) {
+    const responseServiceSaveFile = saveProdukService(
+      pathImage,
+      id_produk,
+      name_produk,
+      description,
+      harga,
+      stock,
+      rating,
+      kategori,
+      kondisi,
+    );
+
+    if (responseServiceSaveFile.status) {
+      return res
+        .status(responseServiceSaveFile.statusCode)
+        .json({ statusCode: 201, status: true, message: "succes add produk" });
+    }
+  } catch {
     return res
-      .status(201)
-      .json({ status: 200, message: saveDataProdukService.message });
-  } else {
-    return res.status(429).json({
-      status: 429,
-      message: saveDataProdukService.message,
-    });
+      .status(400)
+      .json({ statusCode: 400, status: false, message: "bad request" });
   }
 };
 
